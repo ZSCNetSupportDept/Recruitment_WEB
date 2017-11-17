@@ -1,0 +1,258 @@
+/* fonts */
+html{font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif;}
+
+html,body{
+    width: 100%;
+    height:100%;
+}
+
+.navbar-default{border-color: transparent;}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form , .navbar{
+    border-color: transparent;
+}
+.navbar-default img{height: 270%;}
+.navbar{background-color: transparent;}
+
+/*palaceholder colour*/
+.input::-webkit-input-placeholder {color: black;} /* WebKit browsers */
+.input:-moz-placeholder {color: black; opacity: 1; } /* Mozilla Firefox 4 to 18 */
+.input::-moz-placeholder {color: black; opacity: 1; }/* Mozilla Firefox 19+ */
+.input:-ms-input-placeholder {color: black;} /* Internet Explorer 10+ */
+
+/*global*/
+
+.form-control{
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.5);
+    color: black;
+}
+
+.background{
+    position:fixed;
+    width:100%;
+    height:100%;
+    overflow: hidden;
+}
+
+#response{
+    color: #CB4042;
+    font-size: 20px;
+}
+
+#help{
+    color: white;
+}
+
+#help:hover,#help:active,#help:visited{
+    text-decoration: none;
+}
+
+.cpy{
+    min-width: 284px;
+    background-color: rgba(168,216,185,0.8);
+    color: white;
+    text-align: center;
+    padding-top: 6px;
+}
+
+.hint{
+    font-size: 13px;
+    display: block;
+    margin-top: 2px;
+    margin-bottom:5px;
+    color: red;
+    letter-spacing: 1px;
+}
+
+
+
+/*index*/
+.grText{
+    color: white;
+    max-width: 27px;
+    float: right;
+    font-size: 1.5em;
+    letter-spacing: 6px;
+    position: relative;
+}
+
+#text{
+    padding-right:5%;
+    margin-top: 10vh;
+}
+
+#deadline{
+    color: white;
+    margin-top: 10px;
+}
+
+#linkarea{
+    text-align: center;
+    position: relative;
+}
+
+.linkBtn{
+    display: inline-block;
+    background: transparent;
+    padding: 5px;
+    color: white;
+    margin-top: 15px;
+    width: 250px;
+    border: 1px solid;
+    border-radius: 2em;
+}
+
+
+
+.linkBtn:hover,#subBtn:hover{
+    background: lightgray;
+    border-color: white;
+    color: deepskyblue;
+    text-decoration: none;
+}
+
+.linkBtn:active{
+    background: white;
+    color: deepskyblue;
+    text-decoration: none;
+}
+
+#cpy_index{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+/*modify*/
+
+#main{
+    margin-top: 10vh;
+}
+
+
+.selHint{display: none;}
+
+/*register*/
+#MK{
+    line-height: 2.5;
+    position: fixed;
+    left: 0;
+    right: 0;
+}
+
+#subBtn{
+    border-radius: 2em;
+    background: transparent;
+    border: 1px solid;
+    border-radius: 2em;
+    border-color: white;
+    color: white;
+}
+
+#subBtn:active{
+    background: white;
+    color: deepskyblue;
+}
+
+#Sustext{
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#cpy_su{
+    color: white;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    display: none;
+    text-align: center;
+    max-height: 20px;
+}
+
+#cpy_form{
+    margin-top: 66px;
+}
+
+#Rectangle{
+    height: 4.5ch;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 3em;
+}
+
+/*help*/
+#sos{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+}
+
+#cpy_hp{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding-top: 0;
+}
+
+/*verify*/
+#mod_form{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#cpy_vy{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+}
+
+@media(min-height: 540px){
+    #sign{
+        position: absolute;
+        bottom: 10%;
+        left: 0;
+        right: 0;
+    }
+}
+
+
+@media (min-height: 640px){
+    #cpy_form{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+/* animation */
+#main,#mod_form,.cpy {
+    -webkit-animation: fadeIn 0.5s infinite;
+    animation: fadeIn 0.5s infinite;
+    animation-iteration-count: 1;
+    -webkit-animation-iteration-count: 1;
+    animation-fill-mode:forwards;
+}
+
+@keyframes fadeIn {
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+
+@-webkit-keyframes fadeIn {
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>修改信息</title>
+		<!-- css -->
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+	<img class="background" src="pics/RegBg.jpg" draggable="false" oncontextmenu="return false">
+</head>
+<!-- javascript -->
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/functions.js"></script>
+<header>
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand">
+					<img alt="Brand" src="pics/logo.png">
+				</a>
+			</div>
+		</div>
+	</nav>
+</header>
+<body>
+	<div class="container" id="mod_form">
+		<div>
+			<form role="form" name="Data">
+				<div>
+					<div class="form-group">
+						<input name="name" type="text" id="name" placeholder="输入姓名" class="form-control input" required="required">
+					</div>
+					<div class="form-group">
+						<input name="mark" type="text" id="mark" placeholder="输入唯一编码" class="form-control input" required="required">
+					</div>
+					<span id="response"></span>
+					<div>
+						<input type="button" class="btn btn-default btn-block btn-circle-micro" value="我要修改" id="subBtn">
+					</div>
+					<div class="text-center">
+						<h4><a href="help.html" id="help"> Click here when you are in trouble</a></h4>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script>
+		$('#subBtn').click(function () {
+			var name = document.getElementById("name").value;
+			var mark = document.getElementById("mark").value;
+			var s = "name=" + name + "&mark=" + mark;
+			s = encodeURI(s).replace(/\+/g, "%2B");
+			$.ajax({
+				url: "./php/verify.php",
+				type: "POST",
+				data: s,
+				complete: function (result) {
+					result = JSON.parse(result.responseText);
+					if (result.status == 200) {
+						var date = new Date();
+						date.setMinutes(date.getMinutes() + 1);
+						for (var x in result.data)
+							document.cookie = x + "=" + result.data[x] + "; expires=" + date.toGMTString();
+						window.location.pathname = "/modify_page.html";
+					} else if (result.status == 412) {
+						if (result.msg == "input error") {
+                            document.getElementById('response').innerHTML="输错信息了？";
+						} else if (result.msg == "mark does not exist") {
+                            document.getElementById('response').innerHTML="回执码不存在";
+						}
+					}
+				}
+			});
+		})
+	</script>
+</body>
+<footer>
+	<div class="cpy" id="cpy_vy">
+		<p >Copyright &copy; 2017 <a href="http://zsxyww.com/">中山学院网络维护科</a></p>
+	</div>
+</footer>
+</html>

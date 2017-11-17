@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>修改信息</title>
+	<!-- css -->
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<style>
+		body{
+			background-image: url("./pics/RegBg.jpg");
+			background-position: center;
+			background-size:100% 100%;
+			overflow:hidden;
+		}
+		p{
+			margin: 0 0 0;
+		}
+	</style>
+</head>
+<!-- javascript -->
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/functions.js"></script>
+<header>
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand">
+					<img alt="Brand" src="pics/logo.png">
+				</a>
+			</div>
+		</div>
+	</nav>
+</header>
+<body>
+	<div class="container" id="main">
+		<div>
+			<form role="form" name="Data">
+				<input type="hidden" name="_name" id="_name">
+				<input type="hidden" name="mark" id="mark">
+				<div>
+					<div class="form-group">
+						<span class="hint"></span>
+						<input name="name" type="text" id="name" placeholder="&nbsp;姓名*" class="form-control input" required="required">
+					</div>
+					<div class="form-group">
+						<span class="hint"></span>
+						<input name="phone" type="text" id="phone" placeholder="&nbsp;手机号*" class="form-control input" required="required" pattern="[0-9]{11}">
+					</div>
+					<div class="form-group">
+						<span class="hint"></span>
+						<input name="email" type="email" id="email" placeholder="&nbsp;邮箱*" class="form-control input" required="required">
+					</div>
+					<div class="form-group">
+						<span class="hint"></span>
+						<select name="faculty" class="form-control input" id="faculty" required onchange="getClassName()">
+							<option disabled="disabled" selected="selected" value="" class="selHint">学院*</option>
+							<option value="电子信息学院">电子信息学院</option>
+							<option value="机电工程学院">机电工程学院</option>
+							<option value="计算机学院">计算机学院</option>
+							<option value="材料与食品学院">材料与食品学院</option>
+							<option value="人文社会科学学院">人文社会科学学院</option>
+							<option value="管理学院">管理学院</option>
+							<option value="经贸学院">经贸学院</option>
+							<option value="外国语学院">外国语学院</option>
+							<option value="艺术设计学院">艺术设计学院</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<span class="hint"></span>
+						<select name="class" class="form-control input" id="class" required="required">
+							<option value="" disabled="disabled" selected="selected" class="selHint">专业*</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<span class="hint"></span>
+						<input name="number" type="number" id="number" placeholder="&nbsp;学号" class="form-control input" required="required">
+					</div>
+					<div class="text-center" id="tips"><h5>带‘*’为必填项</h5></div>
+					<span id="response"></span>
+					<input type="button" class="btn btn-default btn-block btn-circle-micro" value="修改" id="subBtn" onclick="Subform()">
+					<div class="text-center">
+						<h4><a href="help.html" id="help"> Click here when you are in trouble</a></h4>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script>
+            $('#faculty').ready(function () {
+                document.getElementById("_name").value = getCookie("name");
+                document.getElementById("mark").value = getCookie("mark");
+                document.getElementById("name").value = getCookie("name");
+                document.getElementById("phone").value = getCookie("phone");
+                document.getElementById("email").value = getCookie("email");
+                document.getElementById("faculty").value = getCookie("faculty");
+                document.getElementById("number").value = getCookie("number");
+                getClassName();
+                document.getElementById("class").value = getCookie("class");
+            });
+            if (!getCookie("name") && !getCookie("mark"))
+                window.location.pathname = "/verify_page.html";
+            $('input').focus(function () {
+                $('.hint').text('');
+            })
+
+            function Subform() {
+                var r = check();
+                if (r !== true) {
+                    return false;
+                }
+                var Oname = document.getElementById('_name').value;
+                var mark = document.getElementById('mark').value;
+                var name = document.getElementById('name').value;
+                var phone = document.getElementById('phone').value;
+                var email = document.getElementById('email').value;
+                var faculty = document.getElementById('faculty').value;
+                var classes = document.getElementById('class').value;
+                var number = document.getElementById('number').value;
+
+                var xmlhttp = new XMLHttpRequest();
+                var s = "_name=" + Oname + "&mark=" + mark + "&name=" + name + "&phone=" + phone + "&email=" + email + "&faculty=" + faculty + "&class=" + classes + "&number=" + number;
+                s = encodeURI(s).replace(/\+/g, "%2B");
+
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState === 4) {
+                        if (xmlhttp.status === 200) {
+                            var result = JSON.parse(xmlhttp.responseText);
+                            document.getElementById('response').innerHTML = result;
+                            if (result.status == 200) {
+                                document.getElementById('response').innerHTML="修改成功";
+                            } else if (result.status == 409) {
+                                if (result.msg == "phone is registered") {
+                                    document.getElementById('response').innerHTML = "该手机号已注册"
+                                } else if (result.msg == "email is registered") {
+                                    document.getElementById('response').innerHTML = "该邮箱已注册"
+                                } else if (result.msg == "student id is registered"){
+                                    document.getElementById('response').innerHTML="该学号已注册，有想不通的请点下方链接联系管理员"
+								}
+                            } else if (result.status == 412) {
+                                if (result.msg == "input error") {
+                                    document.getElementById('response').innerHTML = "输入错误？仔细想想有什么填错或者没填的…"
+                                } else if (result.msg == "information does not exist") {
+                                    document.getElementById('response').innerHTML = "信息不匹配？我们只允许大一新生注册，有其他问题的请点击下方链接联系管理员"
+                                }
+                            }
+                        }
+                    }
+                };
+                xmlhttp.open("POST", "./php/modify.php", true);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send(s);
+            }
+	</script>
+</body>
+<footer>
+	<div class="cpy" id="cpy_form">
+		<p >Copyright &copy; 2017 <a href="http://zsxyww.com/">中山学院网络维护科</a></p>
+	</div>
+</footer>
+</html>
