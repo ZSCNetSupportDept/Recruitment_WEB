@@ -5,12 +5,12 @@ require_once dirname(__FILE__) . '/PHPMailer/PHPMailerAutoload.php';
 function send_message($address, $subject, $body, $isHTML = true) {
 	$usr = 'example@example.com';
 	$pwd = 'xxxxxxxxxxxxxxxx';
-	
+
 	/*
 	This password is NOT your e-mail password, it's a 16 characters smtp password provided by your e-mail ISP.
 	此处的密码不是邮箱帐号，而是由邮箱服务提供商提供给你的16位smtp服务密码。
 	*/
-	
+
 
 	$mail = new PHPMailer();
 
