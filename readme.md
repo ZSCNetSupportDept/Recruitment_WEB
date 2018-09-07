@@ -44,7 +44,8 @@
 ### 需要自定义的部分：
 
 #### 连接MySQL使用的参数：
->所处位置：./php/include/class.database.php
+>所处位置：./php/include/class.database.php.example  
+>请复制为：./php/include/class.database.php 并修改$DB_NAME、$DB_USR、$DB_PWD
 
     class Database {
         ……
@@ -57,7 +58,8 @@
 <br >
 
 #### 使用邮箱smtp服务的参数：
->所处位置：./php/include/smtp.php
+>所处位置：./php/include/smtp.php.example  
+>请复制为：./php/include/smtp.php 并修改$usr、$pwd
 
     function send_message($address, $subject, $body, $isHTML = true) {
     	$usr = 'example@example.com';
