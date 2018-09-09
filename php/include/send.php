@@ -5,11 +5,10 @@ require_once dirname(__FILE__) . '/def.php';
 function socket_submit($host, $path, $port, $data, $timeout = 30) {
 
     //FsHtroy:Patch for ssl
-    if ($port == 443) {
-        $host = 'ssl://'.$host;
+    $fp = fsockopen($host, $port, $errno, $errstr, $timeout);
+    if($port == 443) {
+        $fp = fsockopen("ssl://".$host, $port, $errno, $errstr, $timeout);
     }
-
-	$fp = fsockopen($host, $port, $errno, $errstr, $timeout);
 	write_log("\r\n\t打开 socket [hostname: $host][path: $path][port: $port][timeout: $timeout]\r\n", __LINE__);
 	if (!$fp) {
 		write_log("[exit]\r\n\t打开 socket 失败 [$errno: $errstr]\r\n", __LINE__);
